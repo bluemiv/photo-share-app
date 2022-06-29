@@ -27,12 +27,18 @@ const photos = [
     },
 ];
 
+const tags = [
+    { photoId: 1, userId: 'bluemiv' },
+    { photoId: 2, userId: 'mHattrup' },
+];
+
 const typeDefs = `
   type User {
     githubLogin: ID!
     name: String
     avatar: String
     postedPhotos: [Photo!]!
+    inPhotos: [Photo!]!
   }
 
   enum PhotoCategory {
@@ -50,6 +56,7 @@ const typeDefs = `
     description: String
     category: PhotoCategory!
     postedBy: User!
+    taggedUsers: [User!]!
   }
   
   type Query {
@@ -87,12 +94,19 @@ const resolvers = {
     Photo: {
         url: (parent) => `http://yoursite.com/img/${parent.id}.jpg`,
         postedBy: (parent) => users.find((user) => user.githubLogin === parent.githubUser),
+        taggedUsers: (parent) =>
+            tags
+                .filter((tag) => tag.photoId === parent.id)
+                .map((tag) => tag.userId)
+                .map((userId) => users.find((user) => user.githubLogin === userId)),
     },
     User: {
-        postedPhotos: (parent) => {
-            console.log(parent);
-            return photos.filter((photo) => photo.githubUser === parent.githubLogin);
-        },
+        postedPhotos: (parent) => photos.filter((photo) => photo.githubUser === parent.githubLogin),
+        inPhotos: (parent) =>
+            tags
+                .filter((tag) => tag.userId === parent.id)
+                .map((tag) => tag.photoId)
+                .map((photoId) => photos.find((photo) => photo.id === photoId)),
     },
 };
 
