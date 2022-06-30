@@ -16,21 +16,24 @@ const typeDefs = fs.readFileSync('./graphql/typeDefs.graphql', {
 });
 const resolvers = require('../graphql/resovlers');
 
-// get dbContext
-const getDBContext = async () => {
+// get Context
+const getContextByGithubToken = async (githubToken) => {
     const { DB_HOST } = process.env;
     const client = await MongoClient.connect(DB_HOST, { useNewUrlParser: true });
     const db = client.db();
-    return { db };
+    const currentUser = await db.collection('users').findOne({ githubToken });
+    return { db, currentUser };
 };
 
 // start server
 const startServer = async (typeDefs, resolvers) => {
-    const context = await getDBContext();
     const server = new ApolloServer({
         typeDefs,
         resolvers,
-        context,
+        context: async ({ req }) => {
+            const githubToken = req.headers.authorization;
+            return getContextByGithubToken(githubToken);
+        },
     });
     await server.start();
 

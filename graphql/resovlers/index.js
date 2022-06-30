@@ -1,3 +1,4 @@
+const fetch = require('node-fetch');
 const { GraphQLScalarType } = require('graphql');
 const { authorizeWithGithub } = require('../../src/auth/service');
 
@@ -37,19 +38,49 @@ const tags = [
 
 const resolvers = {
     Query: {
+        me: (parent, args, { currentUser }) => currentUser,
         totalPhotos: (parent, args, { db }) => db.collection('photos').estimatedDocumentCount(),
         allPhotos: (parent, args, { db }) => db.collection('photos').find().toArray(),
         totalUsers: (parent, args, { db }) => db.collection('users').estimatedDocumentCount(),
         allUsers: (parent, args, { db }) => db.collection('users').find().toArray(),
     },
     Mutation: {
-        postPhoto: (parent, args) => {
-            const newPhoto = {
-                id: photos.length + 1,
-                created: new Date(),
-                ...args.input,
+        addFakeUsers: async (parent, { count }, { db }) => {
+            const randomUserApi = `https://randomuser.me/api/?results=${count}`;
+
+            const { results } = await fetch(randomUserApi).then((res) => res.json());
+            const users = results.map((r) => ({
+                githubLogin: r.login.username,
+                name: `${r.name.first} ${r.name.last}`,
+                avatar: r.picture.thumbnail,
+                githubToken: r.login.sha1,
+            }));
+
+            await db.collection('users').insert(users);
+            return users;
+        },
+        fakeUserAuth: async (parent, { githubLogin }, { db }) => {
+            const user = await db.collection('users').findOne({ githubLogin });
+
+            if (!user) throw new Error(`Cannot find user with githubLogin "${githubLogin}"`);
+
+            return {
+                token: user.githubToken,
+                user,
             };
-            photos.push(newPhoto);
+        },
+        postPhoto: async (parent, args, { db, currentUser }) => {
+            if (!currentUser) throw new Error('only an authorized user can post a photo');
+
+            const newPhoto = {
+                ...args.input,
+                userId: currentUser.githubLogin,
+                created: new Date(),
+            };
+
+            const { insertedIds } = await db.collection('photos').insert(newPhoto);
+
+            newPhoto.id = insertedIds[0];
             return newPhoto;
         },
         githubAuth: async (parent, { code }, { db }) => {
@@ -75,8 +106,10 @@ const resolvers = {
         },
     },
     Photo: {
-        url: (parent) => `http://yoursite.com/img/${parent.id}.jpg`,
-        postedBy: (parent) => users.find((user) => user.githubLogin === parent.githubUser),
+        id: (parent) => parent.id || parent._id,
+        url: (parent) => `/img/${parent.id}.jpg`,
+        postedBy: (parent, args, { db }) =>
+            db.collection('users').findOne({ githubLogin: parent.userId }),
         taggedUsers: (parent) =>
             tags
                 .filter((tag) => tag.photoId === parent.id)
