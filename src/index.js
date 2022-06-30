@@ -7,14 +7,14 @@ const { MongoClient } = require('mongodb');
 
 // env path setting
 require('dotenv').config({
-    path: path.resolve(__dirname, '.env'),
+    path: path.resolve(__dirname, '../.env'),
 });
 
 // graphql schema & resolver
 const typeDefs = fs.readFileSync('./graphql/typeDefs.graphql', {
     encoding: 'utf8',
 });
-const resolvers = require('./graphql/resovlers');
+const resolvers = require('../graphql/resovlers');
 
 // get dbContext
 const getDBContext = async () => {
