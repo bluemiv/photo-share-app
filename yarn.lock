@@ -634,20 +634,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"apollo-server@npm:^3.9.0":
-  version: 3.9.0
-  resolution: "apollo-server@npm:3.9.0"
-  dependencies:
-    "@types/express": 4.17.13
-    apollo-server-core: ^3.9.0
-    apollo-server-express: ^3.9.0
-    express: ^4.17.1
-  peerDependencies:
-    graphql: ^15.3.0 || ^16.0.0
-  checksum: 11fb36801800da2284857f3fb490eb141536a9cf3b6a3e0506a8f46f062d4384f951652c4b4229fb85c06c108ee9b68328ff55cd74b9f3254a4359551a2ef1b4
-  languageName: node
-  linkType: hard
-
 "aproba@npm:^1.0.3 || ^2.0.0":
   version: 2.0.0
   resolution: "aproba@npm:2.0.0"
@@ -1175,7 +1161,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"express@npm:^4.17.1":
+"express@npm:^4.18.1":
   version: 4.18.1
   resolution: "express@npm:4.18.1"
   dependencies:
@@ -1414,6 +1400,26 @@ __metadata:
   version: 4.2.10
   resolution: "graceful-fs@npm:4.2.10"
   checksum: 3f109d70ae123951905d85032ebeae3c2a5a7a997430df00ea30df0e3a6c60cf6689b109654d6fdacd28810a053348c4d14642da1d075049e6be1ba5216218da
+  languageName: node
+  linkType: hard
+
+"graphql-playground-html@npm:^1.6.30":
+  version: 1.6.30
+  resolution: "graphql-playground-html@npm:1.6.30"
+  dependencies:
+    xss: ^1.0.6
+  checksum: a17b8cd4f9c1dd94c4e2aafb5f39b80fbee20adaf80dccc2d6dfebcd0ebf65dc8d7c913bd387461a0360e61d0a7474512817c5fdb636e6c0d631603ed1e8b54c
+  languageName: node
+  linkType: hard
+
+"graphql-playground-middleware-express@npm:^1.7.23":
+  version: 1.7.23
+  resolution: "graphql-playground-middleware-express@npm:1.7.23"
+  dependencies:
+    graphql-playground-html: ^1.6.30
+  peerDependencies:
+    express: ^4.16.2
+  checksum: 65123c91e9e1d251d45bc9c1697cffb086925e429eedd7151334279c31fdb76eb8601c3e8ec8d56f3f253dc780932848b90d8a9d03f202dad14fd1e734de038d
   languageName: node
   linkType: hard
 
@@ -2217,8 +2223,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "photo-share-api@workspace:."
   dependencies:
-    apollo-server: ^3.9.0
+    apollo-server-express: ^3.9.0
+    express: ^4.18.1
     graphql: ^16.5.0
+    graphql-playground-middleware-express: ^1.7.23
     nodemon: ^2.0.18
     prettier: ^2.7.1
   languageName: unknown
@@ -2928,7 +2936,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xss@npm:^1.0.8":
+"xss@npm:^1.0.6, xss@npm:^1.0.8":
   version: 1.0.13
   resolution: "xss@npm:1.0.13"
   dependencies:
