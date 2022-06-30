@@ -2133,7 +2133,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:^2.6.7":
+"node-fetch@npm:^2.6.6, node-fetch@npm:^2.6.7":
   version: 2.6.7
   resolution: "node-fetch@npm:2.6.7"
   dependencies:
@@ -2326,6 +2326,7 @@ __metadata:
     graphql: ^16.5.0
     graphql-playground-middleware-express: ^1.7.23
     mongodb: ^4.7.0
+    node-fetch: ^2.6.6
     nodemon: ^2.0.18
     prettier: ^2.7.1
   languageName: unknown

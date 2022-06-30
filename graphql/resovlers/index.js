@@ -1,4 +1,5 @@
 const { GraphQLScalarType } = require('graphql');
+const { authorizeWithGithub } = require('../../src/auth/service');
 
 const users = [
     {
@@ -42,7 +43,7 @@ const resolvers = {
         allUsers: (parent, args, { db }) => db.collection('users').find().toArray(),
     },
     Mutation: {
-        postPhoto(parent, args) {
+        postPhoto: (parent, args) => {
             const newPhoto = {
                 id: photos.length + 1,
                 created: new Date(),
@@ -50,6 +51,27 @@ const resolvers = {
             };
             photos.push(newPhoto);
             return newPhoto;
+        },
+        githubAuth: async (parent, { code }, { db }) => {
+            const { message, access_token, avatar_url, login, name } = await authorizeWithGithub({
+                client_id: process.env.CLIENT_ID,
+                client_secret: process.env.CLIENT_SECRET,
+                code,
+            });
+            if (message) throw new Error(message);
+
+            const latestUserInfo = {
+                name,
+                githubLogin: login,
+                githubToken: access_token,
+                avatar: avatar_url,
+            };
+            await db
+                .collection('users')
+                .replaceOne({ githubLogin: login }, latestUserInfo, { upsert: true });
+            const user = await db.collection('users').findOne({ githubLogin: login });
+
+            return { user, token: access_token };
         },
     },
     Photo: {

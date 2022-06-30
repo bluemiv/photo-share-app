@@ -39,6 +39,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["graphql", "npm:16.5.0"],\
             ["graphql-playground-middleware-express", "virtual:e43b3094fa5edf09630a43f82a91ed251cc527d51be648b5b8e3aed0476000219a0f495d84d89945b5b6b84661336a0e56815819acf7aefa3d27159c77b2a1de#npm:1.7.23"],\
             ["mongodb", "npm:4.7.0"],\
+            ["node-fetch", "virtual:e43b3094fa5edf09630a43f82a91ed251cc527d51be648b5b8e3aed0476000219a0f495d84d89945b5b6b84661336a0e56815819acf7aefa3d27159c77b2a1de#npm:2.6.7"],\
             ["nodemon", "npm:2.0.18"],\
             ["prettier", "npm:2.7.1"]\
           ],\
@@ -848,7 +849,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/apollo-server-env-npm-4.2.1-20d6ed2759-039c7eeed8.zip/node_modules/apollo-server-env/",\
           "packageDependencies": [\
             ["apollo-server-env", "npm:4.2.1"],\
-            ["node-fetch", "virtual:20d6ed2759968ba28ab6eb0ad28c424b4602e70e7c2fa9e60fe165d6ca69bc99d3f67c4be057125b902d9653e7ddba5137a47279c79a57c168e38f86a29b2d0a#npm:2.6.7"]\
+            ["node-fetch", "virtual:e43b3094fa5edf09630a43f82a91ed251cc527d51be648b5b8e3aed0476000219a0f495d84d89945b5b6b84661336a0e56815819acf7aefa3d27159c77b2a1de#npm:2.6.7"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -2710,10 +2711,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:20d6ed2759968ba28ab6eb0ad28c424b4602e70e7c2fa9e60fe165d6ca69bc99d3f67c4be057125b902d9653e7ddba5137a47279c79a57c168e38f86a29b2d0a#npm:2.6.7", {\
-          "packageLocation": "./.yarn/__virtual__/node-fetch-virtual-cf70bab462/0/cache/node-fetch-npm-2.6.7-777aa2a6df-8d816ffd1e.zip/node_modules/node-fetch/",\
+        ["virtual:e43b3094fa5edf09630a43f82a91ed251cc527d51be648b5b8e3aed0476000219a0f495d84d89945b5b6b84661336a0e56815819acf7aefa3d27159c77b2a1de#npm:2.6.7", {\
+          "packageLocation": "./.yarn/__virtual__/node-fetch-virtual-953c79d2ed/0/cache/node-fetch-npm-2.6.7-777aa2a6df-8d816ffd1e.zip/node_modules/node-fetch/",\
           "packageDependencies": [\
-            ["node-fetch", "virtual:20d6ed2759968ba28ab6eb0ad28c424b4602e70e7c2fa9e60fe165d6ca69bc99d3f67c4be057125b902d9653e7ddba5137a47279c79a57c168e38f86a29b2d0a#npm:2.6.7"],\
+            ["node-fetch", "virtual:e43b3094fa5edf09630a43f82a91ed251cc527d51be648b5b8e3aed0476000219a0f495d84d89945b5b6b84661336a0e56815819acf7aefa3d27159c77b2a1de#npm:2.6.7"],\
             ["@types/encoding", null],\
             ["encoding", null],\
             ["whatwg-url", "npm:5.0.0"]\
@@ -2920,6 +2921,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["graphql", "npm:16.5.0"],\
             ["graphql-playground-middleware-express", "virtual:e43b3094fa5edf09630a43f82a91ed251cc527d51be648b5b8e3aed0476000219a0f495d84d89945b5b6b84661336a0e56815819acf7aefa3d27159c77b2a1de#npm:1.7.23"],\
             ["mongodb", "npm:4.7.0"],\
+            ["node-fetch", "virtual:e43b3094fa5edf09630a43f82a91ed251cc527d51be648b5b8e3aed0476000219a0f495d84d89945b5b6b84661336a0e56815819acf7aefa3d27159c77b2a1de#npm:2.6.7"],\
             ["nodemon", "npm:2.0.18"],\
             ["prettier", "npm:2.7.1"]\
           ],\
