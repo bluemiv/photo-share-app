@@ -1,17 +1,36 @@
-const { ApolloServer } = require('apollo-server-express');
-const express = require('express');
-const expressPlayground = require('graphql-playground-middleware-express').default;
 const fs = require('fs');
+const path = require('path');
+const { ApolloServer } = require('apollo-server-express');
+const expressPlayground = require('graphql-playground-middleware-express').default;
+const express = require('express');
+const { MongoClient } = require('mongodb');
 
+// env path setting
+require('dotenv').config({
+    path: path.resolve(__dirname, '.env'),
+});
+
+// graphql schema & resolver
 const typeDefs = fs.readFileSync('./graphql/typeDefs.graphql', {
     encoding: 'utf8',
 });
 const resolvers = require('./graphql/resovlers');
 
+// get dbContext
+const getDBContext = async () => {
+    const { DB_HOST } = process.env;
+    const client = await MongoClient.connect(DB_HOST, { useNewUrlParser: true });
+    const db = client.db();
+    return { db };
+};
+
+// start server
 const startServer = async (typeDefs, resolvers) => {
+    const context = await getDBContext();
     const server = new ApolloServer({
         typeDefs,
         resolvers,
+        context,
     });
     await server.start();
 
