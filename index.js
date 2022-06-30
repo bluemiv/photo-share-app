@@ -19,7 +19,7 @@ const startServer = async (typeDefs, resolvers) => {
     server.applyMiddleware({ app, path: '/graphql' });
 
     app.get('/', (req, res) => res.end('PhotoShare API에 오신 것을 환영합니다.'));
-    app.get('/playground', expressPlayground({ endpoint: '/graphql' }));
+    app.get('/playground', expressPlayground({ endpoint: server.graphqlPath }));
 
     app.listen({ port: 4000 }, () =>
         console.log(`🚀 Server ready at https://localhost:4000${server.graphqlPath}`)
