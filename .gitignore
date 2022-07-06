@@ -10,7 +10,9 @@
 !.yarn/cache
 #.pnp.*
 
-data
-.idea
-.vs_code
-.DS_Store
+data/
+/**/.idea
+/**/.vs_code
+/**/.DS_Store
+
+/**/node_modules/
