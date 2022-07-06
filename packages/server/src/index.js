@@ -44,7 +44,7 @@ const startServer = async (typeDefs, resolvers) => {
     app.get('/playground', expressPlayground({ endpoint: server.graphqlPath }));
 
     app.listen({ port: 4000 }, () =>
-        console.log(`🚀 Server ready at https://localhost:4000${server.graphqlPath}`)
+        console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
     );
 };
 

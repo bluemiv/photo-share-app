@@ -1,18 +1,12 @@
 import React from 'react';
-import { Button } from './components';
+import { Users } from './users';
 
-function App() {
+const App: React.FC = () => {
     return (
-        <div className="App">
-            <Button
-                onClick={() => {
-                    console.log('clicked button');
-                }}
-            >
-                Click me!
-            </Button>
+        <div>
+            <Users />
         </div>
     );
-}
+};
 
 export default App;
