@@ -10,7 +10,10 @@
 !.yarn/cache
 #.pnp.*
 
-data
-.idea
+../../.idea
 .vs_code
-.DS_Store
+.DS_store
+
+.env
+
+data/*
