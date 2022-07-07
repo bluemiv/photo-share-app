@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/client';
 import { ROOT_QUERY } from './constants/gql';
 import UserList from './UserList';
 import UserAddButton from './UserAddButton';
+import CurrentUser from './CurrentUser';
 
 const Users: React.FC = () => {
     const [isPolling, setPolling] = useState(false);
@@ -23,6 +24,7 @@ const Users: React.FC = () => {
 
     return (
         <div>
+            {data.me && <CurrentUser me={data.me} />}
             <div>
                 <button onClick={() => refetch()}>Refetch</button>
             </div>

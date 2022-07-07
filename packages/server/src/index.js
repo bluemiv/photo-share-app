@@ -31,7 +31,8 @@ const startServer = async (typeDefs, resolvers) => {
         typeDefs,
         resolvers,
         context: async ({ req }) => {
-            const githubToken = req.headers.authorization;
+            const { authorization } = req.headers;
+            const githubToken = authorization?.split('Bearer ')[1] ?? '';
             return getContextByGithubToken(githubToken);
         },
     });
