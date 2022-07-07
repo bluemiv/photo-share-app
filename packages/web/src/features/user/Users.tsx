@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { ROOT_QUERY } from './constants/gql';
 import UserList from './UserList';
