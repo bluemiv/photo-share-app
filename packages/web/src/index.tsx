@@ -20,6 +20,11 @@ const client = new ApolloClient({
     link: authLink.concat(httpLink),
     uri: process.env.REACT_APP_GRAPHQL_ENTRY,
     cache: new InMemoryCache(),
+    defaultOptions: {
+        watchQuery: {
+            fetchPolicy: 'cache-and-network',
+        },
+    },
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);

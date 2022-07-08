@@ -1,16 +1,40 @@
-import React, { useState } from 'react';
-import { useQuery } from '@apollo/client';
+import React, { useEffect, useState } from 'react';
+import { useLazyQuery, useQuery } from '@apollo/client';
 import { ROOT_QUERY } from './constants/gql';
 import UserList from './UserList';
 import UserAddButton from './UserAddButton';
 import CurrentUser from './CurrentUser';
 
+interface UserInfo {
+    githubLogin: string;
+    name: string;
+    avatar: string;
+}
+
+interface TotalUsersState {
+    totalUsers: number;
+    allUsers: [UserInfo];
+    me: UserInfo;
+}
+
 const Users: React.FC = () => {
-    const [isPolling, setPolling] = useState(false);
+    const [isPolling, setPolling] = useState<boolean>(false);
+    const [users, setUsers] = useState<TotalUsersState | null>();
 
-    const { loading, error, data, refetch, startPolling, stopPolling } = useQuery(ROOT_QUERY);
+    const [
+        fetchUsers,
+        { called, loading, data, error, refetch, startPolling, stopPolling, client },
+    ] = useLazyQuery(ROOT_QUERY);
 
-    if (loading) return <p>Loading...</p>;
+    useEffect(() => {
+        fetchUsers().then(({ data }) => client.cache.writeQuery({ query: ROOT_QUERY, data }));
+    }, []);
+
+    useEffect(() => {
+        setUsers(data);
+    }, [data]);
+
+    if (!called || (called && loading)) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
 
     const onTogglePolling = () => {
@@ -24,9 +48,25 @@ const Users: React.FC = () => {
 
     return (
         <div>
-            {data.me && <CurrentUser me={data.me} />}
+            {users?.me && <CurrentUser me={users.me} />}
             <div>
                 <button onClick={() => refetch()}>Refetch</button>
+            </div>
+            <div>
+                <button
+                    onClick={() => {
+                        const cache: TotalUsersState | null = client.cache.readQuery({
+                            query: ROOT_QUERY,
+                        });
+
+                        if (cache) {
+                            console.log(`cache data: ${cache}`);
+                            setUsers(cache);
+                        }
+                    }}
+                >
+                    Refetch from cache
+                </button>
             </div>
             <div>
                 <button onClick={onTogglePolling}>
@@ -36,7 +76,7 @@ const Users: React.FC = () => {
             <div>
                 <UserAddButton />
             </div>
-            <UserList count={data.totalUsers} users={data.allUsers} />
+            {users && <UserList count={users.totalUsers} users={users.allUsers} />}
         </div>
     );
 };
