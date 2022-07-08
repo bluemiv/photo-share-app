@@ -9,3 +9,30 @@ services:
       - "27017"
     volumes:
       - "./data:/data/db"
+    networks:
+      - photo-share-net
+  photo-share-server:
+    image: photo-share-server
+    ports:
+      - "4000:4000"
+    expose:
+      - "4000"
+    depends_on:
+      - photo-share-mongodb
+    networks:
+      - photo-share-net
+  photo-share-web:
+    image: photo-share-web
+    ports:
+      - "3000:3000"
+    expose:
+      - "3000"
+    depends_on:
+      - photo-share-mongodb
+      - photo-share-server
+    networks:
+      - photo-share-net
+
+networks:
+  photo-share-net:
+    driver: bridge

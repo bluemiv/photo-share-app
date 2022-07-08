@@ -14,6 +14,8 @@
 .vs_code
 .DS_store
 
-.env
+.env*
 
 data/*
+
+build/
